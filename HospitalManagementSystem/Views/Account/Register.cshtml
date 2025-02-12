@@ -1,0 +1,120 @@
+﻿@model HospitalManagementSystem.ViewModels.RegisterVM
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Register as Patient</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="FullName" class="form-label"></label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label"></label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="DateOfBirth" class="form-label"></label>
+                            <input asp-for="DateOfBirth" class="form-control" type="date" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label"></label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary register-btn w-100">Register</button>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">
+                        <a asp-action="Login" class="btn btn-secondary patient-btn">Already a patient?</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var registrationSuccess = '@TempData["RegistrationSuccess"]';
+
+            if (registrationSuccess) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful',
+                    text: registrationSuccess,
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '@Url.Action("Login", "Account")';
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+
+    <style>
+        .register-btn {
+            background-color: #007bff;
+            border-color: #007bff;
+          
+            font-size: 16px;
+           
+            transition: all 0.3s ease;
+        }
+
+            .register-btn:hover {
+                background-color: #0056b3;
+                border-color: #004085;
+            }
+
+        .patient-btn {
+            background-color: #6c757d;
+            border-color: #6c757d;
+         
+            font-size: 16px;
+            
+            transition: all 0.3s ease;
+        }
+
+            .patient-btn:hover {
+                background-color: #5a6268;
+                border-color: #4e555b;
+            }
+
+        .btn {
+            text-transform: uppercase;
+        }
+    </style>
+

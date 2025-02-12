@@ -1,0 +1,75 @@
+﻿@model HospitalManagementSystem.ViewModels.PatientWithTreatmentVM
+
+@{
+    ViewData["Title"] = "View Patient";
+}
+
+<h1>Patient Details</h1>
+
+<div>
+    <h4>Patient</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Full Name</dt>
+        <dd class="col-sm-10">@Model.Patient.FullName</dd>
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Patient.Email</dd>
+        <dt class="col-sm-2">Phone Number</dt>
+        <dd class="col-sm-10">@Model.Patient.PhoneNumber</dd>
+        <dt class="col-sm-2">Address</dt>
+        <dd class="col-sm-10">@Model.Patient.Address</dd>
+        <dt class="col-sm-2">Date of Birth</dt>
+        <dd class="col-sm-10">@Model.Patient.DateOfBirth?.ToShortDateString() ?? "N/A"</dd>
+    </dl>
+
+    <h4>Treatment History</h4>
+    <ul>
+        @foreach (var treatment in Model.Patient.Treatments)
+        {
+            <li>@treatment.Description</li>
+        }
+    </ul>
+
+    <h4>Add Treatment Description</h4>
+    <form asp-action="AddTreatment">
+        <input type="hidden" name="patientId" value="@Model.PatientId" />
+        <div class="form-group">
+            <label asp-for="TreatmentDescription" class="control-label"></label>
+            <textarea asp-for="TreatmentDescription" class="form-control"></textarea>
+            <span asp-validation-for="TreatmentDescription" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Add Treatment" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: '@TempData["SuccessMessage"]',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+            </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: '@TempData["ErrorMessage"]',
+                        showConfirmButton: true
+                    });
+            </text>
+        }
+                });
+    </script>
+}

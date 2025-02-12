@@ -1,0 +1,141 @@
+﻿@model HospitalManagementSystem.ViewModels.PatientStatisticsVM
+
+@{
+    ViewData["Title"] = "Patient Statistics";
+}
+
+<h2 class="text-center my-4">Patient Statistics</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Card for Total Number of Patients -->
+            <div class="card shadow p-4 mb-4 bg-white rounded text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total Number of Patients</h5>
+                    <p class="card-text display-4">@Model.TotalPatients</p>
+                </div>
+            </div>
+
+            <!-- Card for Chart -->
+            <div class="card shadow p-4 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <canvas id="patientChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Function to create gradient background for the chart
+        function createGradient(ctx, chartArea) {
+            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+            gradient.addColorStop(0, 'rgba(54, 162, 235, 0.2)');
+            gradient.addColorStop(1, 'rgba(75, 192, 192, 0.6)');
+            return gradient;
+        }
+
+        const ctx = document.getElementById('patientChart').getContext('2d');
+        const chartConfig = {
+            type: 'bar',
+            data: {
+                labels: ['Patients'],
+                datasets: [{
+                    label: '# of Patients',
+                    data: [@Model.TotalPatients],
+                    backgroundColor: function (context) {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+
+                        if (!chartArea) {
+                            // This case happens on initial chart load
+                            return null;
+                        }
+                        return createGradient(ctx, chartArea);
+                    },
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    borderRadius: 15,
+                    barThickness: 60
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#333',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#ddd',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            color: '#333'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#333'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutBounce'
+                }
+            }
+        };
+
+        const myChart = new Chart(ctx, chartConfig);
+    </script>
+}
+
+<style>
+    /* Additional CSS for enhancing the card and chart appearance */
+    .card {
+        border: none;
+        border-radius: 15px;
+        transition: box-shadow 0.3s;
+    }
+
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .bg-white {
+        background-color: #fff;
+    }
+
+    .container {
+        margin-top: 30px;
+    }
+
+    .display-4 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #007bff; /* Color matches the Admin role color */
+    }
+</style>

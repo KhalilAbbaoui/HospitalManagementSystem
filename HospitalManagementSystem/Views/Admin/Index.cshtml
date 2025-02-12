@@ -1,0 +1,261 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<!-- Header Section -->
+<div class="admin-header d-flex flex-wrap justify-content-between align-items-center p-4 mb-4">
+    <div class="d-flex align-items-center">
+        <i class="fas fa-user-shield fa-2x text-primary me-3"></i>
+        <h1 class="h3 mb-0">Admin Dashboard</h1>
+    </div>
+
+    <div class="header-actions mt-2 mt-md-0">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="fas fa-plus-circle me-2"></i>Add New
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" asp-action="CreateDoctor">Doctor</a></li>
+            </ul>
+        </div>
+
+        <a asp-action="PatientStatistics" class="btn btn-info mx-2">
+            <i class="fas fa-chart-pie me-2"></i>Statistics
+        </a>
+
+        <a asp-action="ManageAppointment" asp-controller="Appointments" class="btn btn-success me-2">
+            <i class="fas fa-calendar-alt me-2"></i>Appointments
+        </a>
+
+        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="admin-container">
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card bg-primary text-white">
+                <h5><i class="fas fa-user-md me-2"></i>Doctors</h5>
+                <span>@Model.Count()</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card bg-success text-white">
+                <h5><i class="fas fa-procedures me-2"></i>Patients</h5>
+                <span>@ViewBag.TotalPatients</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card bg-warning text-dark">
+                <h5><i class="fas fa-calendar-check me-2"></i>Appointments</h5>
+                <span>@ViewBag.TotalAppointments</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctors Table -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-user-md me-2 text-primary"></i>Doctors List</h5>
+            <div class="search-box">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search doctors by name...">
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="doctorsTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Specialization</th>
+                            <th>Contact</th>
+                            <th>Schedule</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var doctor in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-3">
+                                            <i class="fas fa-user-md fa-lg text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">@doctor.FullName</h6>
+                                            <small class="text-muted">ID: @doctor.Id</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@doctor.Specialization</td>
+                                <td>
+                                    <div class="text-nowrap">
+                                        <i class="fas fa-envelope me-2 text-muted"></i>@doctor.Email<br>
+                                        <i class="fas fa-map-marker-alt me-2 text-muted"></i>@doctor.Address
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-nowrap">
+                                        <span class="badge bg-light text-dark">
+                                            <i class="fas fa-clock me-2"></i>
+                                            @doctor.StartTime.ToString(@"hh\:mm") - @doctor.EndTime.ToString(@"hh\:mm")
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success"><i class="fas fa-check-circle me-2"></i>Active</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a asp-action="EditDoctor" asp-route-id="@doctor.Id" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('@doctor.Id')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Fonction pour confirmer la suppression
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Confirm Delete',
+                text: "Are you sure you want to delete this doctor?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `/Admin/DeleteDoctor/${id}`;
+                }
+            });
+        }
+
+        // Fonction pour filtrer les médecins par nom
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchText = this.value.toLowerCase(); // Récupérer le texte de recherche en minuscules
+            const rows = document.querySelectorAll('#doctorsTable tbody tr'); // Sélectionner toutes les lignes du tableau
+
+            rows.forEach(row => {
+                const doctorName = row.querySelector('td h6').textContent.toLowerCase(); // Récupérer le nom du médecin
+                if (doctorName.includes(searchText)) {
+                    row.style.display = ''; // Afficher la ligne si le nom correspond
+                } else {
+                    row.style.display = 'none'; // Masquer la ligne si le nom ne correspond pas
+                }
+            });
+        });
+    </script>
+}
+
+<style>
+    /* Custom Admin Dashboard Styles */
+    .admin-header {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-card h5 {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .stat-card span {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+    .table thead {
+        background: #f8f9fa !important;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        padding: 1rem;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        background: #e9f5ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .badge {
+        padding: 0.5rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .btn-outline-primary, .btn-outline-danger {
+        border-width: 2px;
+        padding: 0.375rem 0.75rem;
+    }
+
+    .search-box {
+        width: 250px;
+    }
+
+    @@media (max-width: 768px) {
+        .admin-header {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+
+        .header-actions {
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .search-box {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .stat-card span {
+            font-size: 1.4rem;
+        }
+    }
+</style>

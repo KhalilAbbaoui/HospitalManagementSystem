@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section-about py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">About Us</h2>
+        <p class="text-center lead">Welcome to <strong>Hospital Management System</strong>, where we are committed to providing exceptional healthcare services with compassion, innovation, and excellence.</p>
+
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <img src="~/images/about.jpg" alt="About Us" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6">
+                <h3 class="mb-4">Our Mission</h3>
+                <p class="text-muted">Our mission is to deliver high-quality healthcare services that improve the lives of our patients. We strive to create a patient-centered environment where every individual receives personalized care tailored to their unique needs.</p>
+
+                <h3 class="mb-4">Our Vision</h3>
+                <p class="text-muted">We envision a future where healthcare is accessible, affordable, and advanced. Our goal is to be the most trusted and innovative healthcare provider in the region, setting new standards in medical excellence.</p>
+            </div>
+        </div>
+
+        <!-- Additional Sections -->
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <h3 class="text-center mb-4">Why Choose Us?</h3>
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <i class="fas fa-heartbeat fa-3x text-primary mb-3"></i>
+                                <h5 class="card-title">Compassionate Care</h5>
+                                <p class="card-text text-muted">We treat every patient with empathy and respect, ensuring a comfortable and supportive experience.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <i class="fas fa-user-md fa-3x text-primary mb-3"></i>
+                                <h5 class="card-title">Expert Team</h5>
+                                <p class="card-text text-muted">Our team of highly skilled doctors and healthcare professionals is dedicated to your well-being.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <i class="fas fa-hospital fa-3x text-primary mb-3"></i>
+                                <h5 class="card-title">State-of-the-Art Facilities</h5>
+                                <p class="card-text text-muted">We use the latest medical technology and equipment to provide the best possible care.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Values Section -->
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <h3 class="text-center mb-4">Our Core Values</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <strong>Integrity:</strong> We uphold the highest ethical standards in everything we do.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <strong>Excellence:</strong> We are committed to delivering the best healthcare services.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <strong>Innovation:</strong> We embrace new technologies and methods to improve patient care.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <strong>Compassion:</strong> We treat every patient with kindness and understanding.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <strong>Teamwork:</strong> We collaborate to provide seamless and efficient care.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <strong>Community:</strong> We are dedicated to serving and improving our community.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="row mt-5">
+            <div class="col-lg-12 text-center">
+                <h3 class="mb-4">Join Us in Making a Difference</h3>
+                <p class="lead">At <strong>Hospital Management System</strong>, we believe in the power of healthcare to transform lives. Whether you're a patient, a caregiver, or a community member, we invite you to be part of our journey.</p>
+                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a></li>
+            </div>
+        </div>
+    </div>
+</section>
