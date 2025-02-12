@@ -1,0 +1,205 @@
+﻿@using HospitalManagementSystem.Models
+
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Hero Section -->
+<header class="header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- Utilisez container-fluid pour une largeur totale -->
+            <a class="navbar-brand" href="#">
+                <img src="~/images/chu.png" alt="CHU logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Sign In</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="hero-text-box d-flex flex-column justify-content-center align-items-center text-center py-5">
+        <h3 class="animate__animated animate__fadeIn">Welcome to Hospital Management<br> System</h3>
+        <a class="btn btn-outline-light mt-4 animate__animated animate__fadeIn animate__delay-1s" href="#">Show me more</a>
+    </div>
+</header>
+
+<!-- Services Section -->
+<section class="section-features py-5" id="services">
+    <div class="container text-center">
+        <h2>Services</h2>
+        <p>Hello, this is Hospital Management System. We have the best services for our patients and manage them.</p>
+        <div class="row mt-5">
+            <div class="col-lg-4 col-md-6 mb-4 d-flex flex-column align-items-center">
+                <i class="fa-solid fa-heart-pulse display-4 mb-3"></i>
+                <h3>Emergency Care</h3>
+                <p>The Emergency Department at Doctors Hospital and Medical Center provides care to patients with urgent medical conditions ranging from complex problems. Care is provided 24 hours a day.</p>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 d-flex flex-column align-items-center">
+                <i class="fa-solid fa-headset display-4 mb-3"></i>
+                <h3>Call Center 24/7</h3>
+                <p>Our agents are on hand 24 hours a day, 7 days a week, and 365 days a year. There is always a courteous, live-voice representative ready to assist your patients and their families, whatever their needs may be.</p>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 d-flex flex-column align-items-center">
+                <i class="fa-solid fa-calendar-check display-4 mb-3"></i>
+                <h3>Appointment</h3>
+                <p>We are happy to announce that our online appointment booking system is developed and launched. Please check back soon for more updates.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="section-steps py-5" id="about">
+    <div class="container">
+        <h2 class="text-center">About Us &mdash; Our Vision</h2>
+        <div class="row align-items-center mt-5">
+            <div class="col-lg-6">
+                <img src="~/images/app-iphone.png" alt="CHU app on iPhone" class="img-fluid animate__animated animate__backInLeft">
+            </div>
+            <div class="col-lg-6">
+                <div class="works-step mb-4">
+                    <div class="step-number">1</div>
+                    <p>Hospital Management System (CHU) is open to all patients every day and provides fundamental medical care and cutting-edge medicine.</p>
+                </div>
+                <div class="works-step mb-4">
+                    <div class="step-number">2</div>
+                    <p>We use our academic knowledge to treat a wide range of health issues, taking a personal touch and utilizing highly specialized and up-to-date research.</p>
+                </div>
+                <div class="works-step mb-4">
+                    <div class="step-number">3</div>
+                    <p>We will innovate and define the future of health care for generations and will be the consumer's first choice for health care.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cities Section -->
+<section class="section-cities py-5" id="cities">
+    <div class="container">
+        <h2 class="text-center">We're currently in these cities</h2>
+        <div class="row text-center mt-5">
+            <!-- CHU TANGER -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="city-card p-3 rounded shadow-sm bg-white">
+                    <img src="~/images/CHU-TANGER-.jpg" alt="CHU TANGER" class="img-fluid rounded mb-3">
+                    <h3 class="mb-2">CHU TANGER</h3>
+                    <div class="city-feature d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-link text-primary me-2"></i>
+                        <a href="https://chutangermohammed6.ma/" class="text-primary text-decoration-none">CHU TANGER</a>
+                    </div>
+                </div>
+            </div>
+            <!-- CHU FES -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="city-card p-3 rounded shadow-sm bg-white">
+                    <img src="~/images/CHU-fès.jpg" alt="CHU FES" class="img-fluid rounded mb-3">
+                    <h3 class="mb-2">CHU FES</h3>
+                    <div class="city-feature d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-link text-primary me-2"></i>
+                        <a href="http://www.chu-fes.ma/" class="text-primary text-decoration-none">CHU FES</a>
+                    </div>
+                </div>
+            </div>
+            <!-- CHU CASABLANCA -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="city-card p-3 rounded shadow-sm bg-white">
+                    <img src="~/images/images.jpeg" alt="CHU CASABLANCA" class="img-fluid rounded mb-3">
+                    <h3 class="mb-2">CHU CASABLANCA</h3>
+                    <div class="city-feature d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-link text-primary me-2"></i>
+                        <a href="https://chuibnrochd.ma/" class="text-primary text-decoration-none">CHU CASABLANCA</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="section-testimonials py-5 bg-white" id="reviews">
+    <div class="container">
+        <h2 class="text-center mb-5">Our patients can't live without us</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="testimonial-card p-4 rounded shadow-sm bg-light">
+                    <blockquote class="blockquote">
+                        <p>The cardiology department at the CHU is at the forefront of cardiac care, utilizing the latest technology and treatment options.</p>
+                    </blockquote>
+                    <footer class="blockquote-footer d-flex align-items-center justify-content-center mt-3">
+                        <img src="~/images/customer-1.jpeg" alt="first-customer" class="img-fluid rounded-circle me-2" style="width: 50px; height: 50px;">
+                        <span>Alberto Duncan</span>
+                    </footer>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="testimonial-card p-4 rounded shadow-sm bg-light">
+                    <blockquote class="blockquote">
+                        <p>The CHU staff is always available and attentive to patients. They take the time to explain treatments clearly and answer all questions.</p>
+                    </blockquote>
+                    <footer class="blockquote-footer d-flex align-items-center justify-content-center mt-3">
+                        <img src="~/images/customer-2.jpg" alt="second-customer" class="img-fluid rounded-circle me-2" style="width: 50px; height: 50px;">
+                        <span>Joana Silva</span>
+                    </footer>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="testimonial-card p-4 rounded shadow-sm bg-light">
+                    <blockquote class="blockquote">
+                        <p>The CHU emergency department provided prompt, efficient care in a clean, well-organized facility, with excellent treatment.</p>
+                    </blockquote>
+                    <footer class="blockquote-footer d-flex align-items-center justify-content-center mt-3">
+                        <img src="~/images/customer-3.jpg" alt="third-customer" class="img-fluid rounded-circle me-2" style="width: 50px; height: 50px;">
+                        <span>Milton Chapman</span>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer -->
+<footer class="bg-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-inline mb-0">
+                    <!-- Lien vers la page "About Us" -->
+                    <li class="list-inline-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="About">About Us</a>
+                    </li>
+
+                    <!-- Lien vers la page "Privacy" -->
+                    <li class="list-inline-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+
+                    <!-- Lien vers la page "Press" -->
+                    <li class="list-inline-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Press">Press</a>
+                    </li>
+
+                    <!-- Lien vers la page "iOS App" -->
+                    <li class="list-inline-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="iOSApp">iOS App</a>
+                    </li>
+
+                    <!-- Lien vers la page "Android App" -->
+                    <li class="list-inline-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="AndroidApp">Android App</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

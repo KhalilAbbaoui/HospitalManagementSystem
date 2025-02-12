@@ -1,0 +1,65 @@
+﻿@model HospitalManagementSystem.ViewModels.LoginVM
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="typewriter">Welcome to the Hospital Management System</h4>
+                    
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center mb-4">
+                        Login as <span class="auto-type"></span>
+                    </h5>
+                    <span class="auto-type"></span>
+                    <form asp-action="Login" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" placeholder="Enter your email address" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary w-100">LOGIN</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a asp-action="Register" class="btn btn-secondary">REGISTER AS PATIENT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const colors = {
+            Doctor: '#28a745',  // Green
+            Patient: '#ffc107', // Yellow
+            Admin: '#007bff'    // Blue
+        };
+
+        const element = document.querySelector('.auto-type');
+
+        new Typed(element, {
+            strings: Object.keys(colors),
+            typeSpeed: 150,//Speed of typing in milliseconds
+            backSpeed: 150, //Speed of deleting characters in milliseconds.
+            loop: true,
+            //preStringTyped: A callback function called before a string is typed.
+            preStringTyped: function (pos, self) {
+                const role = self.strings[pos];
+                element.style.color = colors[role];
+            }
+        });
+    });
+</script>
+}

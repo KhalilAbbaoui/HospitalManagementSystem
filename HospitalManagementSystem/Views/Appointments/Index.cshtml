@@ -1,0 +1,208 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h1 class="text-center mb-4">Appointments</h1>
+
+        <!-- Bouton pour ajouter un rendez-vous -->
+        <p>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus-circle"></i> Add Appointment
+            </a>
+        </p>
+
+        <!-- Tableau des rendez-vous -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Doctor</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Date.ToShortDateString()</td>
+                            <td>@string.Format("{0:hh\\:mm}", item.Time)</td>
+                            <td>@item.Doctor.FullName</td>
+                            <td>@item.Service</td>
+                            <td>
+                                @if (item.IsConfirmed)
+                                {
+                                    <span class="badge badge-success">Confirmed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Pending</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="Appointments" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form asp-action="Delete" asp-controller="Appointments" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button type="button" class="btn btn-danger delete-button">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bouton de retour -->
+        <div class="text-center mt-4">
+            <a asp-controller="Patients" asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Patients
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $('.delete-button').on('click', function () {
+                const form = $(this).closest('form');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#007bff',
+                    cancelButtonColor: '#dc3545',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: '@TempData["SuccessMessage"]',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+            </text>
+        }
+
+        @if (TempData["DeleteMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: '@TempData["DeleteMessage"]',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+            </text>
+        }
+                });
+    </script>
+}
+<!-- CSS personnalisé pour des styles modernes -->
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .table thead th {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+    .table tbody tr {
+        transition: background-color 0.3s ease;
+    }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .badge {
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+    }
+</style>

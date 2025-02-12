@@ -1,0 +1,307 @@
+﻿/* custom.css */
+
+/* Reset des marges et paddings par défaut */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* Header Section */
+.header {
+    position: relative;
+    background-image: url('/images/banner.jpg');
+    background-size: cover; /* Changed to cover */
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 90vh; /* Or a specific height (e.g., 500px) */
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background: transparent;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease;
+    display: flex;
+    justify-content: space-between; /* Aligner le logo à gauche et les liens à droite */
+    align-items: center; /* Centrer verticalement les éléments */
+}
+.navbar.scrolled {
+    background: rgba(0, 0, 0, 0.9); /* Fond plus sombre lors du défilement */
+
+}
+
+.navbar-brand {
+    margin-left: 1rem; /* Espace à gauche du logo */
+}
+.navbar-brand img {
+    height: 50px; /* Taille du logo */
+
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem; /* Espace à droite des liens */
+}
+.navbar-nav .nav-link {
+    color: white !important;
+    margin: 0 1rem; /* Espace entre les liens */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.navbar-nav .nav-link:hover {
+    color: #007bff !important;
+}
+
+/* Hero Section */
+.hero-text-box h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-text-box .btn-outline-light {
+    font-size: 1.2rem;
+    padding: 0.75rem 2rem;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Sections */
+.section-features, .section-steps {
+    padding: 5rem 0;
+}
+
+.section-features h2, .section-steps h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333;
+
+}
+.section-features p, .section-steps p {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+
+}
+
+/* Features Section */
+.section-features .fa-solid {
+    color: #007bff;
+    margin-bottom: 1rem;
+
+}
+
+.section-features h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+
+}
+
+/* Steps Section */
+.section-steps .works-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.section-steps .step-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-right: 1rem;
+}
+
+/* Cities Section */
+.section-cities {
+    background-color: #f9f9f9;
+    padding: 5rem 0;
+}
+
+    .section-cities h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        color: #333;
+        text-align: center;
+    }
+
+.city-card {
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .city-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .city-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+        .city-card img:hover {
+            transform: scale(1.05);
+        }
+
+    .city-card h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        color: #333;
+        text-align: center;
+    }
+
+.city-feature i {
+    color: #007bff;
+    margin-right: 0.5rem;
+}
+
+.city-feature a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+    .city-feature a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+
+/* Testimonials Section */
+.section-testimonials {
+    background-color: #ffffff; /* Fond blanc */
+    padding: 5rem 0;
+}
+
+    .section-testimonials h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        color: #333;
+        text-align: center;
+    }
+
+.testimonial-card {
+    background-color: #f9f9f9; /* Fond léger pour les cartes */
+    border: 1px solid #eaeaea; /* Légère bordure grise */
+    border-radius: 10px; /* Bordures arrondies */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .testimonial-card:hover {
+        transform: translateY(-10px); /* Élévation au survol */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+    }
+
+    .testimonial-card blockquote {
+        font-size: 1rem;
+        font-style: italic;
+        border-left: none; /* Suppression de la bordure gauche */
+        margin-bottom: 1rem;
+       
+    }
+
+    .testimonial-card footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+        .testimonial-card footer img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%; /* Photo circulaire */
+            margin-right: 0.5rem;
+        }
+
+        .testimonial-card footer span {
+            font-size: 1rem;
+            color:snow;
+        }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-testimonials h2 {
+        font-size: 2rem;
+    }
+
+    .testimonial-card {
+        padding: 1rem;
+    }
+
+        .testimonial-card blockquote {
+            font-size: 0.9rem;
+        }
+}
+
+@media (max-width: 576px) {
+    .section-testimonials h2 {
+        font-size: 1.75rem;
+    }
+
+    .testimonial-card {
+        padding: 0.75rem;
+    }
+
+        .testimonial-card blockquote {
+            font-size: 0.8rem;
+        }
+}
+
+/* Footer */
+footer {
+    padding: 2rem 0;
+}
+footer ul li a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+footer ul li a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+   

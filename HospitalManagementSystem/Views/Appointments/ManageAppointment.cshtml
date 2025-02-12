@@ -1,0 +1,256 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Manage Appointments";
+}
+
+<!-- Header Section -->
+<div class="admin-header d-flex flex-wrap justify-content-between align-items-center p-4 mb-4">
+    <div class="d-flex align-items-center">
+        <i class="fas fa-calendar-alt fa-2x text-primary me-3"></i>
+        <h1 class="h3 mb-0">Manage Appointments</h1>
+    </div>
+
+    <div class="header-actions mt-2 mt-md-0">
+        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="admin-container">
+    <!-- Appointments Table -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-calendar-check me-2 text-primary"></i>Appointments List</h5>
+            <div class="search-box">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search appointments...">
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="appointmentsTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Service</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var appointment in Model)
+                        {
+                            <tr>
+                                <td>@appointment.Date.ToShortDateString()</td>
+                                <td>@(new DateTime(appointment.Time.Ticks).ToShortTimeString())</td>
+                                <td>@appointment.Patient.FullName</td>
+                                <td>@appointment.Doctor.FullName</td>
+                                <td>@appointment.Service</td>
+                                <td>
+                                    @if (appointment.IsConfirmed)
+                                    {
+                                        <span class="badge bg-success"><i class="fas fa-check-circle me-2"></i>Confirmed</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning"><i class="fas fa-exclamation-circle me-2"></i>Pending</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!appointment.IsConfirmed)
+                                    {
+                                        <form asp-action="ConfirmAppointment" method="post" class="confirmation confirm-form" style="display:inline;">
+                                            <input type="hidden" name="id" value="@appointment.Id" />
+                                            <button type="submit" class="btn btn-sm btn-success confirm-btn">
+                                                <i class="fas fa-check"></i> Confirm
+                                            </button>
+                                        </form>
+                                        <form asp-action="CancelAppointment" method="post" class="confirmation cancel-form" style="display:inline;">
+                                            <input type="hidden" name="id" value="@appointment.Id" />
+                                            <button type="submit" class="btn btn-sm btn-danger cancel-btn">
+                                                <i class="fas fa-times"></i> Cancel
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Check for success message
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: '@TempData["SuccessMessage"]',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+            </text>
+        }
+
+                // Check for error message
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: '@TempData["ErrorMessage"]',
+                        showConfirmButton: true
+                    });
+            </text>
+        }
+
+                // Confirm Appointment Action
+                $('.confirm-btn').click(function (e) {
+                    e.preventDefault(); // Prevent the default form submission
+                    const form = $(this).closest('form'); // Get the form associated with the button
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You want to confirm this appointment!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, confirm it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit(); // Submit the form if confirmed
+                        }
+                    });
+                });
+
+            // Cancel Appointment Action
+            $('.cancel-btn').click(function (e) {
+                e.preventDefault(); // Prevent the default form submission
+                const form = $(this).closest('form'); // Get the form associated with the button
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to cancel this appointment!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, cancel it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Submit the form if confirmed
+                    }
+                });
+            });
+
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', function () {
+                const searchText = this.value.toLowerCase(); // Get the search text in lowercase
+                const rows = document.querySelectorAll('#appointmentsTable tbody tr'); // Select all table rows
+
+                rows.forEach(row => {
+                    const patientName = row.querySelector('td:nth-child(3)').textContent.toLowerCase(); // Patient name
+                    const doctorName = row.querySelector('td:nth-child(4)').textContent.toLowerCase(); // Doctor name
+                    if (patientName.includes(searchText) || doctorName.includes(searchText)) {
+                        row.style.display = ''; // Show the row if it matches the search
+                    } else {
+                        row.style.display = 'none'; // Hide the row if it doesn't match
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    /* Custom Admin Dashboard Styles */
+    .admin-header {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-card h5 {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .stat-card span {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+    .table thead {
+        background: #f8f9fa !important;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        padding: 1rem;
+    }
+
+    .badge {
+        padding: 0.5rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .search-box {
+        width: 250px;
+    }
+
+    @@media (max-width: 768px) {
+        .admin-header {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+
+        .header-actions {
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .search-box {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .stat-card span {
+            font-size: 1.4rem;
+        }
+    }
+</style>
